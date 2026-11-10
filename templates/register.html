@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+
+{% block title %}Register - ReviewRadar{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 0 auto;">
+    <div class="text-center mb-3">
+        <i class="fas fa-user-plus" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h1 style="font-size: 2rem; color: #333;">Create Account</h1>
+        <p class="text-muted">Join ReviewRadar to start analyzing reviews</p>
+    </div>
+    
+    <form method="POST" action="{{ url_for('register') }}" id="registerForm">
+        <div class="form-group">
+            <label for="name" class="form-label">
+                <i class="fas fa-user"></i> Full Name
+            </label>
+            <input type="text" id="name" name="name" class="form-input" 
+                   placeholder="Enter your full name" required>
+        </div>
+        
+        <div class="form-group">
+            <label for="email" class="form-label">
+                <i class="fas fa-envelope"></i> Gmail Address
+            </label>
+            <input type="email" id="email" name="email" class="form-input" 
+                   placeholder="Enter your Gmail address" required>
+            <small class="text-muted">Only Gmail addresses are accepted</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="password" class="form-label">
+                <i class="fas fa-lock"></i> Password
+            </label>
+            <input type="password" id="password" name="password" class="form-input" 
+                   placeholder="Enter your password" required>
+            <div id="passwordRequirements" style="background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-top: 0.5rem; font-size: 0.9rem;">
+                <p style="margin-bottom: 0.5rem;"><strong>Password Requirements:</strong></p>
+                <ul style="margin: 0; padding-left: 1.5rem;">
+                    <li id="req-length">Maximum 10 characters</li>
+                    <li id="req-uppercase">At least one uppercase letter</li>
+                    <li id="req-special">At least one special character (!@#$%^&*)</li>
+                    <li id="req-number">At least one number</li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="confirm_password" class="form-label">
+                <i class="fas fa-lock"></i> Confirm Password
+            </label>
+            <input type="password" id="confirm_password" name="confirm_password" class="form-input" 
+                   placeholder="Confirm your password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-user-plus"></i> Create Account
+        </button>
+    </form>
+    
+    <div class="text-center mt-3">
+        <p class="text-muted">Already have an account?</p>
+        <a href="{{ url_for('login') }}" class="btn btn-secondary">
+            <i class="fas fa-sign-in-alt"></i> Login
+        </a>
+        <a href="{{ url_for('welcome') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Welcome
+        </a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const password = document.getElementById('password');
+    const confirmPassword = document.getElementById('confirm_password');
+    const email = document.getElementById('email');
+    
+    // Password validation
+    function validatePassword() {
+        const value = password.value;
+        let isValid = true;
+        
+        // Check length
+        if (value.length > 10) {
+            document.getElementById('req-length').style.color = '#dc3545';
+            document.getElementById('req-length').innerHTML = '❌ Maximum 10 characters';
+            isValid = false;
+        } else {
+            document.getElementById('req-length').style.color = '#28a745';
+            document.getElementById('req-length').innerHTML = '✅ Maximum 10 characters';
+        }
+        
+        // Check uppercase
+        if (!/[A-Z]/.test(value)) {
+            document.getElementById('req-uppercase').style.color = '#dc3545';
+            document.getElementById('req-uppercase').innerHTML = '❌ At least one uppercase letter';
+            isValid = false;
+        } else {
+            document.getElementById('req-uppercase').style.color = '#28a745';
+            document.getElementById('req-uppercase').innerHTML = '✅ At least one uppercase letter';
+        }
+        
+        // Check special character
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value)) {
+            document.getElementById('req-special').style.color = '#dc3545';
+            document.getElementById('req-special').innerHTML = '❌ At least one special character';
+            isValid = false;
+        } else {
+            document.getElementById('req-special').style.color = '#28a745';
+            document.getElementById('req-special').innerHTML = '✅ At least one special character';
+        }
+        
+        // Check number
+        if (!/\d/.test(value)) {
+            document.getElementById('req-number').style.color = '#dc3545';
+            document.getElementById('req-number').innerHTML = '❌ At least one number';
+            isValid = false;
+        } else {
+            document.getElementById('req-number').style.color = '#28a745';
+            document.getElementById('req-number').innerHTML = '✅ At least one number';
+        }
+        
+        return isValid;
+    }
+    
+    // Gmail validation
+    function validateGmail() {
+        const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        const isValid = gmailPattern.test(email.value);
+        
+        if (email.value && !isValid) {
+            email.setCustomValidity('Please enter a valid Gmail address');
+            email.style.borderColor = '#dc3545';
+        } else {
+            email.setCustomValidity('');
+            email.style.borderColor = '#e9ecef';
+        }
+        
+        return isValid;
+    }
+    
+    // Password confirmation validation
+    function validateConfirmPassword() {
+        const isValid = password.value === confirmPassword.value;
+        
+        if (confirmPassword.value && !isValid) {
+            confirmPassword.setCustomValidity('Passwords do not match');
+            confirmPassword.style.borderColor = '#dc3545';
+        } else {
+            confirmPassword.setCustomValidity('');
+            confirmPassword.style.borderColor = '#e9ecef';
+        }
+        
+        return isValid;
+    }
+    
+    // Event listeners
+    password.addEventListener('input', function() {
+        if (password.value) {
+            validatePassword();
+        }
+        if (confirmPassword.value) {
+            validateConfirmPassword();
+        }
+    });
+    
+    confirmPassword.addEventListener('input', function() {
+        if (confirmPassword.value) {
+            validateConfirmPassword();
+        }
+    });
+    
+    email.addEventListener('input', function() {
+        if (email.value) {
+            validateGmail();
+        } else {
+            email.setCustomValidity('');
+            email.style.borderColor = '#e9ecef';
+        }
+    });
+    
+    // Form submission validation
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+        let hasErrors = false;
+        
+        // Validate password if it has content
+        if (password.value && !validatePassword()) {
+            hasErrors = true;
+        }
+        
+        // Validate email if it has content
+        if (email.value && !validateGmail()) {
+            hasErrors = true;
+        }
+        
+        // Validate password confirmation if it has content
+        if (confirmPassword.value && !validateConfirmPassword()) {
+            hasErrors = true;
+        }
+        
+        if (hasErrors) {
+            e.preventDefault();
+            alert('Please fix the validation errors before submitting.');
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %} 

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Home - ReviewRadar{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center mb-3">
+        <i class="fas fa-home" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h1 style="font-size: 2.5rem; color: #333;">Welcome, {{ user_name }}!</h1>
+        <p class="text-muted">Your sentiment analysis dashboard</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem; color: #667eea;">
+            <i class="fas fa-upload"></i> Upload & Analyze
+        </h3>
+        <p style="line-height: 1.8; margin-bottom: 1.5rem;">
+            Upload your CSV file containing customer reviews to get started with sentiment analysis.
+            Our AI-powered system will analyze each review and provide detailed insights.
+        </p>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary">
+            <i class="fas fa-upload"></i> Upload Reviews
+        </a>
+    </div>
+    
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem; color: #28a745;">
+            <i class="fas fa-brain"></i> Quick Prediction
+        </h3>
+        <p style="line-height: 1.8; margin-bottom: 1.5rem;">
+            Analyze individual text inputs instantly. Perfect for testing or analyzing specific reviews
+            without uploading a file.
+        </p>
+        <a href="{{ url_for('predict') }}" class="btn btn-success">
+            <i class="fas fa-magic"></i> Try Prediction
+        </a>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <h3 style="margin-bottom: 1.5rem; text-align: center;">
+        <i class="fas fa-chart-line"></i> Dashboard Overview
+    </h3>
+    
+    <div class="grid grid-3">
+        <div class="text-center">
+            <i class="fas fa-file-csv" style="font-size: 2.5rem; color: #667eea; margin-bottom: 1rem;"></i>
+            <h4>Upload Data</h4>
+            <p class="text-muted">CSV files with reviews</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-cogs" style="font-size: 2.5rem; color: #ffc107; margin-bottom: 1rem;"></i>
+            <h4>AI Analysis</h4>
+            <p class="text-muted">RoBERTa model processing</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-chart-pie" style="font-size: 2.5rem; color: #28a745; margin-bottom: 1rem;"></i>
+            <h4>Visual Results</h4>
+            <p class="text-muted">Charts and insights</p>
+        </div>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <div class="text-center">
+        <h3 style="margin-bottom: 1rem;">Ready to Analyze?</h3>
+        <p class="text-muted mb-3">Start analyzing your customer reviews today</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary">
+            <i class="fas fa-upload"></i> Upload Your Reviews
+        </a>
+        <a href="{{ url_for('about') }}" class="btn btn-secondary">
+            <i class="fas fa-info-circle"></i> Learn More
+        </a>
+    </div>
+</div>
+{% endblock %}

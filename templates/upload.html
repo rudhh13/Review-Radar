@@ -1,0 +1,199 @@
+{% extends "base.html" %}
+
+{% block title %}Upload Reviews - ReviewRadar{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center mb-3">
+        <i class="fas fa-upload" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h1 style="font-size: 2.5rem; color: #333;">Upload Reviews</h1>
+        <p class="text-muted">Upload your CSV file to start sentiment analysis</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem;">
+            <i class="fas fa-file-upload"></i> File Upload
+        </h3>
+        
+        <form method="POST" enctype="multipart/form-data" id="uploadForm">
+            <div class="form-group">
+                <label for="file" class="form-label">
+                    <i class="fas fa-file-csv"></i> Select CSV File
+                </label>
+                <input type="file" id="file" name="file" class="form-input" 
+                       accept=".csv" required onchange="updateFileName()">
+            </div>
+            
+            <div id="fileInfo" style="display: none; background: #f8f9fa; padding: 1rem; border-radius: 10px; margin-bottom: 1rem;">
+                <p><strong>Selected File:</strong> <span id="fileName"></span></p>
+                <p><strong>File Size:</strong> <span id="fileSize"></span></p>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-play"></i> Start Analysis
+            </button>
+        </form>
+        
+        <div class="text-center mt-3">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+    
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem;">
+            <i class="fas fa-info-circle"></i> Requirements & Guidelines
+        </h3>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #667eea; margin-bottom: 0.5rem;">
+                <i class="fas fa-check-circle"></i> File Requirements
+            </h4>
+            <ul style="line-height: 1.6;">
+                <li>File format: <strong>CSV</strong> only</li>
+                <li>Must contain a column named <code>'review'</code></li>
+                <li>Maximum file size: <strong>10MB</strong></li>
+                <li>Reviews should be in text format</li>
+            </ul>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #28a745; margin-bottom: 0.5rem;">
+                <i class="fas fa-lightbulb"></i> Best Practices
+            </h4>
+            <ul style="line-height: 1.6;">
+                <li>Use clear, readable text for better accuracy</li>
+                <li>Include a variety of review lengths</li>
+                <li>Ensure reviews are in English for best results</li>
+                <li>Remove any special characters that might interfere</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h4 style="color: #ffc107; margin-bottom: 0.5rem;">
+                <i class="fas fa-exclamation-triangle"></i> Processing Time
+            </h4>
+            <p style="line-height: 1.6;">
+                Analysis time depends on the number of reviews:
+                <br>• < 100 reviews: ~10-30 seconds
+                <br>• 100-500 reviews: ~30-60 seconds
+                <br>• 500+ reviews: ~1-3 minutes
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <h3 style="margin-bottom: 1rem; text-align: center;">
+        <i class="fas fa-file-csv"></i> Example CSV Format
+    </h3>
+    
+    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px;">
+        <p style="margin-bottom: 1rem;"><strong>Your CSV should look like this:</strong></p>
+        
+        <div style="background: white; padding: 1rem; border-radius: 5px; font-family: monospace; font-size: 0.9rem; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #e9ecef;">
+                        <th style="padding: 0.5rem; border: 1px solid #dee2e6; text-align: left;">review</th>
+                        <th style="padding: 0.5rem; border: 1px solid #dee2e6; text-align: left;">rating</th>
+                        <th style="padding: 0.5rem; border: 1px solid #dee2e6; text-align: left;">date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">"This product exceeded my expectations!"</td>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">5</td>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">2024-01-15</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">"Disappointed with the quality"</td>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">2</td>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">2024-01-16</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">"Good value for the price"</td>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">4</td>
+                        <td style="padding: 0.5rem; border: 1px solid #dee2e6;">2024-01-17</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <p style="margin-top: 1rem; font-size: 0.9rem; color: #6c757d;">
+            <i class="fas fa-info-circle"></i> 
+            The 'review' column is required. Additional columns like 'rating' and 'date' are optional and will be preserved in the output.
+        </p>
+    </div>
+</div>
+
+<script>
+function updateFileName() {
+    const fileInput = document.getElementById('file');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        fileName.textContent = file.name;
+        fileSize.textContent = (file.size / 1024 / 1024).toFixed(2) + ' MB';
+        fileInfo.style.display = 'block';
+    } else {
+        fileInfo.style.display = 'none';
+    }
+}
+
+// Add drag and drop functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('file');
+    const uploadForm = document.getElementById('uploadForm');
+    
+    // Prevent default drag behaviors
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        uploadForm.addEventListener(eventName, preventDefaults, false);
+        document.body.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    // Highlight drop area when item is dragged over it
+    ['dragenter', 'dragover'].forEach(eventName => {
+        uploadForm.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        uploadForm.addEventListener(eventName, unhighlight, false);
+    });
+    
+    // Handle dropped files
+    uploadForm.addEventListener('drop', handleDrop, false);
+    
+    function preventDefaults (e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    function highlight(e) {
+        uploadForm.style.border = '2px dashed #667eea';
+        uploadForm.style.backgroundColor = 'rgba(102, 126, 234, 0.1)';
+    }
+    
+    function unhighlight(e) {
+        uploadForm.style.border = '';
+        uploadForm.style.backgroundColor = '';
+    }
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length > 0) {
+            fileInput.files = files;
+            updateFileName();
+        }
+    }
+});
+</script>
+{% endblock %} 

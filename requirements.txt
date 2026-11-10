@@ -1,0 +1,13 @@
+flask==3.0.0
+flask-login==0.6.3
+pandas
+numpy
+nltk==3.8.1
+matplotlib
+seaborn
+wordcloud
+reportlab==4.0.7
+torch
+transformers
+safetensors
+werkzeug

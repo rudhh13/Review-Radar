@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}Predict Sentiment - ReviewRadar{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center mb-3">
+        <i class="fas fa-brain" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h1 style="font-size: 2.5rem; color: #333;">Sentiment Prediction</h1>
+        <p class="text-muted">Analyze individual text for sentiment</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem;">
+            <i class="fas fa-edit"></i> Enter Text
+        </h3>
+        
+        <form method="POST" action="{{ url_for('predict') }}" id="predictForm">
+            <div class="form-group">
+                <label for="text" class="form-label">
+                    <i class="fas fa-comment"></i> Review Text
+                </label>
+                <textarea id="text" name="text" class="form-input" 
+                          rows="6" placeholder="Enter your review text here..." required></textarea>
+            </div>
+            
+            <button type="submit" class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-magic"></i> Analyze Sentiment
+            </button>
+        </form>
+        
+        <div class="text-center mt-3">
+            <a href="{{ url_for('home') }}" class="btn btn-secondary">
+                <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+        </div>
+    </div>
+    
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem;">
+            <i class="fas fa-info-circle"></i> Tips for Best Results
+        </h3>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #667eea; margin-bottom: 0.5rem;">
+                <i class="fas fa-lightbulb"></i> What to Include
+            </h4>
+            <ul style="line-height: 1.6;">
+                <li>Clear, complete sentences</li>
+                <li>Specific product or service details</li>
+                <li>Your honest opinion and feelings</li>
+                <li>Context about your experience</li>
+            </ul>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+            <h4 style="color: #28a745; margin-bottom: 0.5rem;">
+                <i class="fas fa-check-circle"></i> Best Practices
+            </h4>
+            <ul style="line-height: 1.6;">
+                <li>Use natural language</li>
+                <li>Include emotional words</li>
+                <li>Be specific about what you liked/disliked</li>
+                <li>Avoid excessive abbreviations</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h4 style="color: #ffc107; margin-bottom: 0.5rem;">
+                <i class="fas fa-robot"></i> AI Model Info
+            </h4>
+            <p style="line-height: 1.6;">
+                Our model uses advanced RoBERTa architecture with sarcasm awareness
+                to provide accurate sentiment classification.
+            </p>
+        </div>
+    </div>
+</div>
+
+{% if text %}
+<div class="card border-radius shadow">
+    <h3 style="margin-bottom: 1.5rem; text-align: center;">
+        <i class="fas fa-chart-bar"></i> Analysis Result
+    </h3>
+    
+    <div style="background: #f8f9fa; padding: 1.5rem; border-radius: 10px; margin-bottom: 1.5rem;">
+        <h4 style="color: #333; margin-bottom: 0.5rem;">Your Text:</h4>
+        <p style="color: #666; line-height: 1.6;">{{ text }}</p>
+    </div>
+    
+    <div class="text-center" style="margin-bottom: 1.5rem;">
+        <h4 style="color: #333; margin-bottom: 1rem;">Predicted Sentiment:</h4>
+        {% if sentiment == 'Positive' %}
+            <div style="background: #d4edda; color: #155724; padding: 1.5rem; border-radius: 15px; font-size: 1.5rem; font-weight: 600; display: inline-block;">
+                <i class="fas fa-thumbs-up"></i> Positive
+            </div>
+        {% elif sentiment == 'Negative' %}
+            <div style="background: #f8d7da; color: #721c24; padding: 1.5rem; border-radius: 15px; font-size: 1.5rem; font-weight: 600; display: inline-block;">
+                <i class="fas fa-thumbs-down"></i> Negative
+            </div>
+        {% else %}
+            <div style="background: #d1ecf1; color: #0c5460; padding: 1.5rem; border-radius: 15px; font-size: 1.5rem; font-weight: 600; display: inline-block;">
+                <i class="fas fa-minus-circle"></i> Neutral
+            </div>
+        {% endif %}
+    </div>
+    
+    {% if sarcasm_detected %}
+    <div class="text-center" style="background: #fff3cd; color: #856404; padding: 1rem; border-radius: 10px;">
+        <i class="fas fa-exclamation-triangle"></i> 
+        <strong>Sarcasm Detected:</strong> Our sarcasm-aware model has identified potential sarcastic content in your text.
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+{% endblock %}

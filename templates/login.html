@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block title %}Login - ReviewRadar{% endblock %}
+
+{% block content %}
+<div class="card" style="max-width: 400px; margin: 0 auto;">
+    <div class="text-center mb-3">
+        <i class="fas fa-radar" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h1 style="font-size: 2rem; color: #333;">Welcome Back</h1>
+        <p class="text-muted">Sign in to access ReviewRadar</p>
+    </div>
+    
+    <form method="POST" action="{{ url_for('login') }}" id="loginForm">
+        <div class="form-group">
+            <label for="email" class="form-label">
+                <i class="fas fa-envelope"></i> Gmail Address
+            </label>
+            <input type="email" id="email" name="email" class="form-input" 
+                   placeholder="Enter your Gmail address" required>
+            <small class="text-muted">Only Gmail addresses are accepted</small>
+        </div>
+        
+        <div class="form-group">
+            <label for="password" class="form-label">
+                <i class="fas fa-lock"></i> Password
+            </label>
+            <input type="password" id="password" name="password" class="form-input" 
+                   placeholder="Enter your password" required>
+        </div>
+        
+        <button type="submit" class="btn btn-primary" style="width: 100%;">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+        </button>
+    </form>
+    
+    <div class="text-center mt-3">
+        <p class="text-muted">Don't have an account?</p>
+        <a href="{{ url_for('register') }}" class="btn btn-success">
+            <i class="fas fa-user-plus"></i> Create Account
+        </a>
+        <a href="{{ url_for('welcome') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back to Welcome
+        </a>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const email = document.getElementById('email');
+    
+    // Gmail validation
+    function validateGmail() {
+        const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
+        const isValid = gmailPattern.test(email.value);
+        
+        if (email.value && !isValid) {
+            email.setCustomValidity('Please enter a valid Gmail address');
+            email.style.borderColor = '#dc3545';
+        } else {
+            email.setCustomValidity('');
+            email.style.borderColor = '#e9ecef';
+        }
+        
+        return isValid;
+    }
+    
+    // Event listener for real-time validation
+    email.addEventListener('input', function() {
+        if (email.value) {
+            validateGmail();
+        } else {
+            email.setCustomValidity('');
+            email.style.borderColor = '#e9ecef';
+        }
+    });
+    
+    // Form submission validation - only validate if email has content
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        if (email.value && !validateGmail()) {
+            e.preventDefault();
+            alert('Please enter a valid Gmail address.');
+            return false;
+        }
+    });
+});
+</script>
+{% endblock %} 

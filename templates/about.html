@@ -1,0 +1,204 @@
+{% extends "base.html" %}
+
+{% block title %}About - ReviewRadar{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="text-center mb-3">
+        <i class="fas fa-info-circle" style="font-size: 3rem; color: #667eea; margin-bottom: 1rem;"></i>
+        <h1 style="font-size: 2.5rem; color: #333;">About ReviewRadar</h1>
+        <p class="text-muted">Advanced sentiment analysis platform for customer feedback</p>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem; color: #667eea;">
+            <i class="fas fa-rocket"></i> What is ReviewRadar?
+        </h3>
+        <p style="line-height: 1.8; margin-bottom: 1rem;">
+            ReviewRadar is a comprehensive sentiment analysis platform designed to help businesses and researchers 
+            understand customer feedback through advanced machine learning techniques. Our platform processes 
+            customer reviews and provides detailed insights into sentiment patterns.
+        </p>
+        <p style="line-height: 1.8;">
+            Whether you're analyzing product reviews, customer service feedback, or social media comments, 
+            ReviewRadar provides the tools you need to extract meaningful insights from text data.
+        </p>
+    </div>
+    
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem; color: #28a745;">
+            <i class="fas fa-cogs"></i> How It Works
+        </h3>
+        <ol style="line-height: 1.8; text-align: left;">
+            <li><strong>Upload:</strong> Upload your CSV file containing customer reviews</li>
+            <li><strong>Process:</strong> Our system preprocesses and analyzes each review</li>
+            <li><strong>Analyze:</strong> Advanced ML models determine sentiment polarity</li>
+            <li><strong>Visualize:</strong> Interactive charts and word clouds display results</li>
+            <li><strong>Export:</strong> Download comprehensive reports in PDF or CSV format</li>
+        </ol>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <h3 style="margin-bottom: 1.5rem; text-align: center;">
+        <i class="fas fa-brain"></i> Technology Stack
+    </h3>
+    
+    <div class="grid grid-3">
+        <div class="text-center">
+            <i class="fab fa-python" style="font-size: 3rem; color: #3776ab; margin-bottom: 1rem;"></i>
+            <h4>Python</h4>
+            <p class="text-muted">Backend framework and data processing</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-flask" style="font-size: 3rem; color: #000000; margin-bottom: 1rem;"></i>
+            <h4>Flask</h4>
+            <p class="text-muted">Web framework for the application</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-chart-line" style="font-size: 3rem; color: #ff6b35; margin-bottom: 1rem;"></i>
+            <h4>RoBERTa</h4>
+            <p class="text-muted">ML Model</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-database" style="font-size: 3rem; color: #336791; margin-bottom: 1rem;"></i>
+            <h4>Pandas</h4>
+            <p class="text-muted">Data manipulation and analysis</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-chart-bar" style="font-size: 3rem; color: #11557c; margin-bottom: 1rem;"></i>
+            <h4>Matplotlib</h4>
+            <p class="text-muted">Data visualization and chart generation</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-cloud" style="font-size: 3rem; color: #ff6b35; margin-bottom: 1rem;"></i>
+            <h4>WordCloud</h4>
+            <p class="text-muted">Word cloud generation for text analysis</p>
+        </div>
+    </div>
+</div>
+
+<div class="grid grid-2">
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem; color: #dc3545;">
+            <i class="fas fa-shield-alt"></i> Security & Privacy
+        </h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Data Protection:</strong> Your uploaded files are processed securely</li>
+            <li><strong>No Permanent Storage:</strong> Files are deleted after processing</li>
+            <li><strong>Session Management:</strong> Secure login system with session handling</li>
+            <li><strong>HTTPS Ready:</strong> Platform supports secure connections</li>
+            <li><strong>Local Processing:</strong> All analysis happens on the server</li>
+        </ul>
+    </div>
+    
+    <div class="card border-radius shadow">
+        <h3 style="margin-bottom: 1rem; color: #ffc107;">
+            <i class="fas fa-lightbulb"></i> Key Features
+        </h3>
+        <ul style="line-height: 1.8;">
+            <li><strong>Advanced Preprocessing:</strong> Text cleaning and normalization</li>
+            <li><strong>Interactive Visualizations:</strong> Charts, graphs, and word clouds</li>
+            <li><strong>Export Options:</strong> PDF reports and CSV downloads</li>
+            <li><strong>Real-time Analysis:</strong> Fast processing of large datasets</li>
+            <li><strong>User-friendly Interface:</strong> Modern, responsive design</li>
+        </ul>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <h3 style="margin-bottom: 1.5rem; text-align: center;">
+        <i class="fas fa-chart-pie"></i> Sentiment Analysis Process
+    </h3>
+    
+    <div class="grid grid-2">
+        <div>
+            <h4 style="color: #667eea; margin-bottom: 1rem;">
+                <i class="fas fa-arrow-right"></i> Text Preprocessing
+            </h4>
+            <ul style="line-height: 1.8;">
+                <li><strong>Lowercase Conversion:</strong> Standardize text case</li>
+                <li><strong>Punctuation Removal:</strong> Clean special characters</li>
+                <li><strong>Stopword Elimination:</strong> Remove common words</li>
+                <li><strong>Lemmatization:</strong> Reduce words to base form</li>
+                <li><strong>Tokenization:</strong> Split text into individual words</li>
+            </ul>
+        </div>
+        
+        <div>
+            <h4 style="color: #28a745; margin-bottom: 1rem;">
+                <i class="fas fa-brain"></i> Sentiment Classification
+            </h4>
+            <ul style="line-height: 1.8;">
+                <li><strong>Polarity Analysis:</strong> Determine positive/negative/neutral sentiment</li>
+                <li><strong>Multi-class Classification:</strong> Positive, Negative, Neutral</li>
+                <li><strong>Context Awareness:</strong> Consider surrounding words</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <h3 style="margin-bottom: 1.5rem; text-align: center;">
+        <i class="fas fa-users"></i> Use Cases
+    </h3>
+    
+    <div class="grid grid-3">
+        <div class="text-center">
+            <i class="fas fa-shopping-cart" style="font-size: 2.5rem; color: #28a745; margin-bottom: 1rem;"></i>
+            <h4>E-commerce</h4>
+            <p class="text-muted">Analyze product reviews and customer feedback</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-headset" style="font-size: 2.5rem; color: #667eea; margin-bottom: 1rem;"></i>
+            <h4>Customer Service</h4>
+            <p class="text-muted">Monitor support ticket sentiment</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-bullhorn" style="font-size: 2.5rem; color: #ffc107; margin-bottom: 1rem;"></i>
+            <h4>Social Media</h4>
+            <p class="text-muted">Track brand mentions and public opinion</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-graduation-cap" style="font-size: 2.5rem; color: #dc3545; margin-bottom: 1rem;"></i>
+            <h4>Research</h4>
+            <p class="text-muted">Academic and market research projects</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-building" style="font-size: 2.5rem; color: #6c757d; margin-bottom: 1rem;"></i>
+            <h4>Business Intelligence</h4>
+            <p class="text-muted">Strategic decision making and insights</p>
+        </div>
+        
+        <div class="text-center">
+            <i class="fas fa-chart-line" style="font-size: 2.5rem; color: #17a2b8; margin-bottom: 1rem;"></i>
+            <h4>Market Analysis</h4>
+            <p class="text-muted">Competitor analysis and market trends</p>
+        </div>
+    </div>
+</div>
+
+<div class="card border-radius shadow">
+    <div class="text-center">
+        <h3 style="margin-bottom: 1rem;">Ready to Get Started?</h3>
+        <p class="text-muted mb-3">Start analyzing your customer reviews today</p>
+        <a href="{{ url_for('upload') }}" class="btn btn-primary">
+            <i class="fas fa-upload"></i> Upload Your Reviews
+        </a>
+        <a href="{{ url_for('home') }}" class="btn btn-secondary">
+            <i class="fas fa-home"></i> Back to Home
+        </a>
+    </div>
+</div>
+{% endblock %} 
